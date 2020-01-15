@@ -75,7 +75,7 @@ class DBHelper(context: Context?)
     }
 
     fun findContactById(contactId: Int): Contact {
-        val person = Contact()
+        val contact = Contact()
 
         val query = "SELECT * FROM $TABLE_CONTACTS WHERE $COLUMN_ID = \"$contactId\""
 
@@ -84,14 +84,14 @@ class DBHelper(context: Context?)
 
         if (cursor.moveToFirst()) {
             cursor.moveToFirst()
-            person.id = cursor.getInt(0)
-            person.name = cursor.getString(1)
-            person.phone = cursor.getString(2)
-            person.email = cursor.getString(3)
+            contact.id = cursor.getInt(0)
+            contact.name = cursor.getString(1)
+            contact.phone = cursor.getString(2)
+            contact.email = cursor.getString(3)
             cursor.close()
         }
         db.close()
-        return person
+        return contact
     }
 
     fun updateContactById(contactId: Int, contact: Contact) {
