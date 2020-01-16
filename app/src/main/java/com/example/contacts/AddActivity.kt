@@ -2,10 +2,8 @@ package com.example.contacts
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_add.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +16,7 @@ class AddActivity : AppCompatActivity() {
             val email = email.text.toString()
 
 
-            val db = DBHelper(this)
+            val db = DatabaseController(this)
 
             val contact = Contact(0, name, phone, email)
 

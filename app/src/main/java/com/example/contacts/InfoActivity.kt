@@ -2,7 +2,6 @@ package com.example.contacts
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_info.*
 
@@ -13,7 +12,7 @@ class InfoActivity: AppCompatActivity() {
 
         val id = intent.getIntExtra("id", 0)
 
-        val db = DBHelper(this)
+        val db = DatabaseController(this)
 
         val contact = db.findContactById(id)
 
