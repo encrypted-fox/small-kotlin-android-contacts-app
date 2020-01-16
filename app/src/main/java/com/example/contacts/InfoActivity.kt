@@ -10,34 +10,57 @@ class InfoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
 
-        val id = intent.getIntExtra("id", 0)
-
         val db = DatabaseController(this)
 
-        val contact = db.findContactById(id)
+        if(intent.hasExtra("id")) {
+            val id = intent.getIntExtra("id", 0)
+            val contact = db.findContactById(id)
+            name.setText(contact.name)
+            phone.setText(contact.phone)
+            email.setText(contact.email)
 
-        name.setText(contact.name)
-        phone.setText(contact.phone)
-        email.setText(contact.email)
+            btnSave.setOnClickListener {
 
-        btnSave.setOnClickListener {
 
-            val contactToSave = Contact()
-            contactToSave.name = name.text.toString()
-            contactToSave.phone = phone.text.toString()
-            contactToSave.email = email.text.toString()
+                val contactToSave = Contact()
+                contactToSave.name = name.text.toString()
+                contactToSave.phone = phone.text.toString()
+                contactToSave.email = email.text.toString()
 
-            db.updateContactById(id, contactToSave)
+                if (contactToSave.name.isNotBlank() && contactToSave.phone.isNotBlank() &&  contactToSave.email.isNotBlank()) {
+                    db.updateContactById(id, contactToSave)
 
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            btnDelete.setOnClickListener {
+                db.deleteContactById(id)
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
+        else {
+            btnDelete.isEnabled = false
 
-        btnDelete.setOnClickListener {
-            db.deleteContactById(id)
+            btnSave.setOnClickListener {
+                val name = name.text.toString()
+                val phone = phone.text.toString()
+                val email = email.text.toString()
 
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+                if (name.isNotBlank() && phone.isNotBlank() && phone.isNotBlank())  {
+                    val db = DatabaseController(this)
+
+                    val contact = Contact(0, name, phone, email)
+
+                    db.addContact(contact)
+
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
+            }
         }
     }
 }

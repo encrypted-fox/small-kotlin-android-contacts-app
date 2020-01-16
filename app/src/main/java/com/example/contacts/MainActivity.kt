@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         listView.adapter = adapter
 
         buttonAdd.setOnClickListener {
-            val intent = Intent(this, AddActivity::class.java)
+            val intent = Intent(this, InfoActivity::class.java)
             startActivity(intent)
         }
 
